@@ -16,6 +16,8 @@ const OnlineStatus = ({ onlineData }: { onlineData: OnlineData }) => {
         document.getElementById('favicon')?.setAttribute('href', onlineData.icon);
     }
 
+    document.title = `${onlineData.players.online}/${onlineData.players.max} - Minecraft Server Status`;
+
     const playerList = getPlayersList(onlineData.players);
 
     return (
