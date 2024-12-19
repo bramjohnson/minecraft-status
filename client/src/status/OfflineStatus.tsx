@@ -1,5 +1,7 @@
 
 function OfflineStatus() {
+    document.title = 'Offline - Minecraft Server Status';
+
     return (
         <>
             <div id="status-dashboard">
