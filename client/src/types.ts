@@ -3,9 +3,15 @@ export interface PlayerData {
   uuid: string;
 }
 
+interface DebugData {
+  cachetime: number;
+  cacheexpire: number;
+}
+
 interface StatusData {
   hostname: string;
   ip: string;
+  debug: DebugData;
 }
 
 export interface ServerPlayersData {

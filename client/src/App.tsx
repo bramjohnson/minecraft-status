@@ -1,9 +1,9 @@
 import StatusPage from './status/StatusPage';
 import OptionalWhitelistChecker from './whitelist/OptionalWhitelistChecker';
 
+const MY_STATUS_API = import.meta.env.VITE_MINECRAFT_STATUS_API;
 const MY_MINECRAFT_SERVER = import.meta.env.VITE_MINECRAFT_SERVER_IP;
 const MY_WHITELIST_URL = import.meta.env.VITE_WHITELIST_URL;
-console.log(MY_MINECRAFT_SERVER, MY_WHITELIST_URL);
 
 const CLIPBOARD_TEXT_TIMEOUT = 1000;
 
@@ -27,7 +27,7 @@ function App() {
         <span id="server-ip-copy-icon" className="material-icons" onClick={copyToClipboard}>content_copy</span>
       </div>
       <OptionalWhitelistChecker whitelistDataUrl={MY_WHITELIST_URL} />
-      <StatusPage serverIP={MY_MINECRAFT_SERVER} />
+      <StatusPage statusAPI={MY_STATUS_API} serverIP={MY_MINECRAFT_SERVER} />
     </div>
   )
 }

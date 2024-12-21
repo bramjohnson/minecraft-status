@@ -4,8 +4,8 @@ import OfflineStatus from './OfflineStatus';
 import OnlineStatus from './OnlineStatus';
 import { useServerStatus } from '../hooks/getServerStatus';
 
-function StatusPage({ serverIP }: { serverIP: string }) {
-    const statusData: MCServerStatusData | undefined = useServerStatus(serverIP);
+function StatusPage({ statusAPI, serverIP }: { statusAPI: string, serverIP: string }) {
+    const statusData: MCServerStatusData | undefined = useServerStatus(statusAPI, serverIP);
 
     // Don't show if no status found...
     if (statusData === undefined) {
