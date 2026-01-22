@@ -1,5 +1,6 @@
 import PlayerEntry from "./PlayerEntry";
 import { OnlineData, PlayerData } from "../types";
+import WhitelistChecker from "../whitelist/WhitelistChecker";
 
 const getPlayersList = (playersData: PlayerData[]) => {
   return playersData.map((playerData: PlayerData, idx: number) => (
@@ -13,12 +14,22 @@ const OnlineStatus = ({ onlineData }: { onlineData: OnlineData }) => {
   //     document.getElementById('favicon')?.setAttribute('href', onlineData.icon);
   // }
 
-  // document.title = `${onlineData.players.online}/${onlineData.players.max} - Minecraft Server Status`;
+  console.log(onlineData);
 
   const playerList = getPlayersList(onlineData.players);
+  const onlinePlayerCount = onlineData.players.length;
+
+  document.title = `${onlinePlayerCount}/${onlineData.maxPlayers} - Minecraft Server Status`;
+
+  const whitelistCheckerComponent = onlineData.useAllowlist ? (
+    <WhitelistChecker whitelist={onlineData.allowlist} />
+  ) : (
+    <></>
+  );
 
   return (
     <>
+      {whitelistCheckerComponent}
       <div id="status-dashboard">
         <div id="status-header">
           <div id="online-status">
@@ -31,7 +42,9 @@ const OnlineStatus = ({ onlineData }: { onlineData: OnlineData }) => {
           <span id="online-status-motd">
             <i>{onlineData.motd}</i>
           </span>
-          {/* <h2>Players: {onlineData.players.online}/{onlineData.players.max}</h2> */}
+          <h2>
+            Players: {onlinePlayerCount}/{onlineData.maxPlayers}
+          </h2>
         </div>
       </div>
 

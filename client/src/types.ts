@@ -26,6 +26,9 @@ export interface OnlineData extends StatusData {
   players: PlayerData[];
   // icon?: string;
   motd: string;
+  maxPlayers: number;
+  allowlist: PlayerData[];
+  useAllowlist: boolean;
 }
 
 export interface OfflineData extends StatusData {

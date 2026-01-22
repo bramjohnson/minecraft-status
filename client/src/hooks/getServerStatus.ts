@@ -13,7 +13,10 @@ export function useServerStatus(url: string): MCServerStatusData | undefined {
   const [version, setVersion] = useState<string>("");
   const [online, setOnline] = useState<boolean>(false);
   const [players, setPlayers] = useState<PlayerData[]>([]);
+  const [allowlist, setAllowlist] = useState<PlayerData[]>([]);
+  const [useAllowlist, setUseAllowlist] = useState<boolean>(false);
   const [motd, setMOTD] = useState<string>("");
+  const [maxPlayers, setMaxPlayers] = useState<number>(0);
   const [ws, setWS] = useState<WebSocket | undefined>();
 
   useEffect(() => {
@@ -41,10 +44,16 @@ export function useServerStatus(url: string): MCServerStatusData | undefined {
         const msgPlayers: PlayerData[] = parsed.data.players!;
         const msgVersion: string = parsed.data.version!;
         const msgMOTD: string = parsed.data.motd!;
+        const msgMaxPlayers: number = parsed.data.maxPlayers!;
+        const msgAllowlist: PlayerData[] = parsed.data.allowlist!;
+        const msgUseAllowlist: boolean = parsed.data.usingAllowlist!;
         setOnline(msgOnline);
         setVersion(msgVersion);
         setPlayers(msgPlayers);
         setMOTD(msgMOTD);
+        setMaxPlayers(msgMaxPlayers);
+        setAllowlist(msgAllowlist);
+        setUseAllowlist(msgUseAllowlist);
       }
 
       if (messageType === "playerJoined") {
@@ -68,5 +77,13 @@ export function useServerStatus(url: string): MCServerStatusData | undefined {
 
   console.log(players, version, motd);
 
-  return { online, players, version, motd };
+  return {
+    online,
+    players,
+    version,
+    motd,
+    maxPlayers,
+    allowlist,
+    useAllowlist,
+  };
 }
