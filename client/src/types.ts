@@ -1,6 +1,6 @@
 export interface PlayerData {
   name: string;
-  uuid: string;
+  id: string;
 }
 
 interface DebugData {
@@ -9,9 +9,9 @@ interface DebugData {
 }
 
 interface StatusData {
-  hostname: string;
-  ip: string;
-  debug: DebugData;
+  // hostname: string;
+  // ip: string;
+  // debug: DebugData;
 }
 
 export interface ServerPlayersData {
@@ -22,16 +22,16 @@ export interface ServerPlayersData {
 
 export interface OnlineData extends StatusData {
   online: true;
-  version: string;
-  players: ServerPlayersData;
-  icon?: string;
-  motd: {
-    clean: string[];
-  }
+  // version: string;
+  players: PlayerData[];
+  // icon?: string;
+  // motd: {
+  // clean: string[];
+  // }
 }
 
 export interface OfflineData extends StatusData {
-  'online': false;
+  online: false;
 }
 
 export type MCServerStatusData = OnlineData | OfflineData;

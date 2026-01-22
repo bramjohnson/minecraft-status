@@ -1,29 +1,54 @@
+// import { WebSocket } from "ws"
+import { MCServerStatusData, PlayerData } from "../types";
 import { useEffect, useState } from "react";
-import { MCServerStatusData } from "../types";
-import axios from "axios";
 
-// Remote data is cached for 1 minute,
-// Makes no sense to fetch again before cache is released.
-const FETCH_INTERVAL_MILLIS = 60e3;
+// export function connectToMinecraftWebSocket(url: string) {
+//     const client = new WebSocket(url)
+//     client.onopen((ws, msg: any) => {
+//         console.log(msg);
+//     })
+// }
 
-const fetchServerData = async (statusAPI: string, serverIP: string, callback: (data: any) => void): Promise<void> => {
-    const res = await axios.get(`${statusAPI}${serverIP}`);
-    return callback(res.data);
-}
+export function useServerStatus(url: string): MCServerStatusData | undefined {
+    const [online, setOnline] = useState<boolean>(false);
+    const [players, setPlayers] = useState<PlayerData[]>([]);
+    const [ws, setWS] = useState<WebSocket | undefined>();
 
-export const useServerStatus = (statusAPI: string, serverIP: string): MCServerStatusData | undefined => {
-    const [status, setStatus] = useState<MCServerStatusData>();
-    const fetchServerDataThunk = () => { fetchServerData(statusAPI, serverIP, setStatus) };
-
-    // Fetch data as soon as component is rendered
-    useEffect(fetchServerDataThunk, []);
-
-    // Fetch data every FETCH_INTERVAL_MILLIS ms
     useEffect(() => {
-        const interval = setInterval(fetchServerDataThunk, FETCH_INTERVAL_MILLIS)
-        // Clear the interval on cleanup
-        return () => clearInterval(interval);
-    }, []);
+        const client = new WebSocket(url);
+        setWS(client)
+    }, [])
 
-    return status;
+    useEffect(() => {
+        if (ws === undefined) {
+            return;
+        }
+
+        ws.onopen = (msg: any) => {
+            console.log(msg);
+        }
+
+        ws.onmessage = (msg: any) => {
+            console.log(msg)
+            const parsed = JSON.parse(msg.data);
+            console.log(parsed)
+            const messageType: string = parsed.type!;
+            if (messageType === "init") {
+                console.log("init")
+                const msgOnline: boolean = parsed.data.online!;
+                const msgPlayers: PlayerData[] = parsed.data.players!;
+                setOnline(msgOnline)
+                setPlayers(msgPlayers)
+            }
+
+            if (messageType === "playersJoined") {
+                console.log("playersJoined")
+                const msgPlayers: PlayerData[] = parsed.data.players!;
+                setPlayers(msgPlayers)
+            }
+        }
+    }, [ws])
+
+
+    return { online, players }
 }

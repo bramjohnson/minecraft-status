@@ -1,7 +1,7 @@
 import StatusPage from './status/StatusPage';
 import OptionalWhitelistChecker from './whitelist/OptionalWhitelistChecker';
 
-const MY_STATUS_API = import.meta.env.VITE_MINECRAFT_STATUS_API;
+const MY_LIMITED_SERVER = import.meta.env.VITE_MINECRAFT_LIMITED_MANAGEMENT_SERVER;
 const MY_MINECRAFT_SERVER = import.meta.env.VITE_MINECRAFT_SERVER_IP;
 const MY_WHITELIST_URL = import.meta.env.VITE_WHITELIST_URL;
 
@@ -27,7 +27,7 @@ function App() {
         <span id="server-ip-copy-icon" className="material-icons" onClick={copyToClipboard}>content_copy</span>
       </div>
       <OptionalWhitelistChecker whitelistDataUrl={MY_WHITELIST_URL} />
-      <StatusPage statusAPI={MY_STATUS_API} serverIP={MY_MINECRAFT_SERVER} />
+      <StatusPage managementAPI={MY_LIMITED_SERVER} />
     </div>
   )
 }
