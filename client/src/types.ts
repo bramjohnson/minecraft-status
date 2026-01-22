@@ -3,15 +3,15 @@ export interface PlayerData {
   id: string;
 }
 
-interface DebugData {
-  cachetime: number;
-  cacheexpire: number;
-}
+// interface DebugData {
+//   cachetime: number;
+//   cacheexpire: number;
+// }
 
 interface StatusData {
-  // hostname: string;
-  // ip: string;
-  // debug: DebugData;
+  //   hostname: string;
+  //   ip: string;
+  //   debug: DebugData;
 }
 
 export interface ServerPlayersData {
@@ -22,12 +22,10 @@ export interface ServerPlayersData {
 
 export interface OnlineData extends StatusData {
   online: true;
-  // version: string;
+  version: string;
   players: PlayerData[];
   // icon?: string;
-  // motd: {
-  // clean: string[];
-  // }
+  motd: string;
 }
 
 export interface OfflineData extends StatusData {
@@ -36,12 +34,12 @@ export interface OfflineData extends StatusData {
 
 export type MCServerStatusData = OnlineData | OfflineData;
 export interface MCServerStatusResponse extends Response {
-  data: MCServerStatusData,
+  data: MCServerStatusData;
 }
 
-// Whitelist 
+// Whitelist
 type WhitelistedPlayer = PlayerData;
 export type Whitelist = WhitelistedPlayer[];
 export interface WhitelistResponse extends Response {
-  data: Whitelist,
+  data: Whitelist;
 }

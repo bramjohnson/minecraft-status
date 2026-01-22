@@ -1,39 +1,43 @@
-
-import PlayerEntry from './PlayerEntry';
-import { OnlineData, PlayerData, ServerPlayersData } from '../types';
+import PlayerEntry from "./PlayerEntry";
+import { OnlineData, PlayerData } from "../types";
 
 const getPlayersList = (playersData: PlayerData[]) => {
-    return playersData.map((playerData: PlayerData, idx: number) => <PlayerEntry key={idx} playerData={playerData} />)
-}
+  return playersData.map((playerData: PlayerData, idx: number) => (
+    <PlayerEntry key={idx} playerData={playerData} />
+  ));
+};
 
 const OnlineStatus = ({ onlineData }: { onlineData: OnlineData }) => {
-    // Change the website icon to the minecraft server icon
-    // if (onlineData.icon) {
-    //     document.getElementById('favicon')?.setAttribute('href', onlineData.icon);
-    // }
+  // Change the website icon to the minecraft server icon
+  // if (onlineData.icon) {
+  //     document.getElementById('favicon')?.setAttribute('href', onlineData.icon);
+  // }
 
-    // document.title = `${onlineData.players.online}/${onlineData.players.max} - Minecraft Server Status`;
+  // document.title = `${onlineData.players.online}/${onlineData.players.max} - Minecraft Server Status`;
 
-    const playerList = getPlayersList(onlineData.players);
+  const playerList = getPlayersList(onlineData.players);
 
-    return (
-        <>
-            <div id="status-dashboard">
-                <div id="status-header">
-                    <div id="online-status">
-                        <span id="online-status-icon" className="material-icons">track_changes</span>
-                        <h2 id="online-status-text">Online</h2>
-                        {/* <span>{onlineData.version}</span> */}
-                    </div>
-                    {/* <span id='online-status-motd'><i>{onlineData.motd.clean}</i></span> */}
-                    {/* <h2>Players: {onlineData.players.online}/{onlineData.players.max}</h2> */}
-                </div>
-            </div>
+  return (
+    <>
+      <div id="status-dashboard">
+        <div id="status-header">
+          <div id="online-status">
+            <span id="online-status-icon" className="material-icons">
+              track_changes
+            </span>
+            <h2 id="online-status-text">Online</h2>
+            <span>{onlineData.version}</span>
+          </div>
+          <span id="online-status-motd">
+            <i>{onlineData.motd}</i>
+          </span>
+          {/* <h2>Players: {onlineData.players.online}/{onlineData.players.max}</h2> */}
+        </div>
+      </div>
 
-            {playerList}
-        </>
-    )
-}
+      {playerList}
+    </>
+  );
+};
 
-export default OnlineStatus
-
+export default OnlineStatus;
