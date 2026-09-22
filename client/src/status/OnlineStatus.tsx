@@ -1,25 +1,38 @@
 import PlayerEntry from "./PlayerEntry";
-import { OnlineData, PlayerData } from "../types";
+import { OnlineServerStatus, Player } from "../types";
 import WhitelistChecker from "../whitelist/WhitelistChecker";
 
-const getPlayersList = (playersData: PlayerData[]) => {
-  return playersData.map((playerData: PlayerData, idx: number) => (
+const getPlayersList = (playersData: Player[]) => {
+  return playersData.map((playerData: Player, idx: number) => (
     <PlayerEntry key={idx} playerData={playerData} />
   ));
 };
 
-const OnlineStatus = ({ onlineData }: { onlineData: OnlineData }) => {
-  // Change the website icon to the minecraft server icon
-  // if (onlineData.icon) {
-  //     document.getElementById('favicon')?.setAttribute('href', onlineData.icon);
-  // }
+function updatePageTitle(playersOnline: number, playersMax: number) {
+  document.title = `${playersOnline}/${playersMax} - Minecraft Server Status`;
+}
 
-  console.log(onlineData);
+const OnlineStatus = ({
+  onlineData,
+  serverIP,
+}: {
+  onlineData: OnlineServerStatus;
+  serverIP: string;
+}) => {
+  // Change the website icon to the minecraft server icon
+  if (onlineData) {
+    document
+      .getElementById("favicon")
+      ?.setAttribute(
+        "href",
+        `https://eu.mc-api.net/v3/server/favicon/${serverIP}`,
+      );
+  }
 
   const playerList = getPlayersList(onlineData.players);
   const onlinePlayerCount = onlineData.players.length;
 
-  document.title = `${onlinePlayerCount}/${onlineData.maxPlayers} - Minecraft Server Status`;
+  updatePageTitle(onlinePlayerCount, onlineData.maxPlayers);
 
   const whitelistCheckerComponent = onlineData.useAllowlist ? (
     <WhitelistChecker whitelist={onlineData.allowlist} />

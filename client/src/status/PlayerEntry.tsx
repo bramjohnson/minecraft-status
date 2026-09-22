@@ -1,6 +1,6 @@
-import { PlayerData } from "../types";
+import { Player } from "../types";
 
-function PlayerEntry({ playerData }: { playerData: PlayerData }) {
+function PlayerEntry({ playerData }: { playerData: Player }) {
   return (
     <div className="playerEntry">
       <img

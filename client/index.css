@@ -111,6 +111,12 @@
   cursor: default;
 }
 
+#loading-status-icon {
+  color: rgb(0, 153, 255);
+  transform: translate(0px, 3px);
+  cursor: default;
+}
+
 h1 {
   margin: 0px;
 }

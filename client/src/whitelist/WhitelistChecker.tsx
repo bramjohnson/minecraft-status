@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PlayerData } from "../types";
+import { Player } from "../types";
 
 const getWhitelistedSymbol = (username: string, isWhitelisted: boolean) => {
   if (!username || username === "") {
@@ -11,7 +11,7 @@ const getWhitelistedSymbol = (username: string, isWhitelisted: boolean) => {
   }
 };
 
-function WhitelistChecker({ whitelist }: { whitelist: PlayerData[] }) {
+function WhitelistChecker({ whitelist }: { whitelist: Player[] }) {
   const [usernameInput, setUsernameInput] = useState<string>("");
 
   const isUsernameWhitelisted = whitelist

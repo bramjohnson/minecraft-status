@@ -1,47 +1,40 @@
-export interface PlayerData {
+export interface Player {
   name: string;
   id: string;
-}
-
-// interface DebugData {
-//   cachetime: number;
-//   cacheexpire: number;
-// }
-
-interface StatusData {
-  //   hostname: string;
-  //   ip: string;
-  //   debug: DebugData;
 }
 
 export interface ServerPlayersData {
   online: number;
   max: number;
-  list?: PlayerData[]; // Only exists when online === 0
+  list?: Player[]; // Only exists when online === 0
 }
 
-export interface OnlineData extends StatusData {
+export interface OnlineServerStatus {
   online: true;
   version: string;
-  players: PlayerData[];
+  players: Player[];
   // icon?: string;
   motd: string;
   maxPlayers: number;
-  allowlist: PlayerData[];
+  allowlist: Player[];
   useAllowlist: boolean;
 }
 
-export interface OfflineData extends StatusData {
+export interface OfflineServerStatus {
   online: false;
 }
 
-export type MCServerStatusData = OnlineData | OfflineData;
-export interface MCServerStatusResponse extends Response {
-  data: MCServerStatusData;
+export interface LoadingServerStatus {
+  online: undefined;
 }
 
+export type MinecraftServerStatus =
+  | OnlineServerStatus
+  | OfflineServerStatus
+  | LoadingServerStatus;
+
 // Whitelist
-type WhitelistedPlayer = PlayerData;
+type WhitelistedPlayer = Player;
 export type Whitelist = WhitelistedPlayer[];
 export interface WhitelistResponse extends Response {
   data: Whitelist;
