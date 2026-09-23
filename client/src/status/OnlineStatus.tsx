@@ -1,10 +1,11 @@
 import PlayerEntry from "./PlayerEntry";
-import { OnlineServerStatus, Player } from "../types";
+import { OnlineServerStatus, Player, PlayerGhost } from "../types";
 import WhitelistChecker from "../whitelist/WhitelistChecker";
+import PlayerGhostEntry from "./PlayerGhostEntry";
 
 const getPlayersList = (playersData: Player[]) => {
-  return playersData.map((playerData: Player, idx: number) => (
-    <PlayerEntry key={idx} playerData={playerData} />
+  return playersData.map((playerData: Player) => (
+    <PlayerEntry key={playerData.id} playerData={playerData} />
   ));
 };
 
@@ -30,6 +31,15 @@ const OnlineStatus = ({
   }
 
   const playerList = getPlayersList(onlineData.players);
+  const onlinePlayerIds = new Set(
+    onlineData.players.map((player) => player.id),
+  );
+  const onlyOfflineGhosts = onlineData.playersHistory.filter(
+    (playerGhost) => !onlinePlayerIds.has(playerGhost.id),
+  );
+  const playerGhostList = onlyOfflineGhosts.map((ghostData: PlayerGhost) => {
+    return <PlayerGhostEntry key={ghostData.id} ghostData={ghostData} />;
+  });
   const onlinePlayerCount = onlineData.players.length;
 
   updatePageTitle(onlinePlayerCount, onlineData.maxPlayers);
@@ -62,6 +72,7 @@ const OnlineStatus = ({
       </div>
 
       {playerList}
+      {playerGhostList}
     </>
   );
 };

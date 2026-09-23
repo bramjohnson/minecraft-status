@@ -3,6 +3,10 @@ export interface Player {
   id: string;
 }
 
+export interface PlayerGhost extends Player {
+  last_online: number;
+}
+
 export interface ServerPlayersData {
   online: number;
   max: number;
@@ -13,6 +17,7 @@ export interface OnlineServerStatus {
   online: true;
   version: string;
   players: Player[];
+  playersHistory: PlayerGhost[];
   // icon?: string;
   motd: string;
   maxPlayers: number;

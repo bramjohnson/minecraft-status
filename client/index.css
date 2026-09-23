@@ -133,6 +133,19 @@ h2 {
   border-bottom: 2px solid #ffffff27;
 }
 
+.playerGhostEntry {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 2px solid #ffffff27;
+  filter: brightness(50%);
+}
+.playerLastOnline {
+  font-family: monospace;
+  font-size: 1.15rem;
+}
+
 .playerAvatar {
   width: 64px;
 }

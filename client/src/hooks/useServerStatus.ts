@@ -1,4 +1,4 @@
-import { MinecraftServerStatus, Player } from "../types";
+import { MinecraftServerStatus, Player, PlayerGhost } from "../types";
 import { useEffect, useRef, useState } from "react";
 
 export function useServerStatus(
@@ -7,6 +7,7 @@ export function useServerStatus(
   const [version, setVersion] = useState<string>("");
   const [online, setOnline] = useState<boolean | undefined>(undefined);
   const [players, setPlayers] = useState<Player[]>([]);
+  const [playersHistory, setPlayersHistory] = useState<PlayerGhost[]>([]);
   const [allowlist, setAllowlist] = useState<Player[]>([]);
   const [useAllowlist, setUseAllowlist] = useState<boolean>(false);
   const [motd, setMOTD] = useState<string>("");
@@ -86,12 +87,16 @@ export function useServerStatus(
       setMaxPlayers(msgMaxPlayers);
       const msgOnline: boolean = parsed.online!;
       setOnline(msgOnline);
-      const msgPlayers: Player[] = parsed.players!;
+      const msgPlayers: Player[] = parsed.players_online!;
       setPlayers(msgPlayers);
       const msgIsAllowlistEnforced: boolean = parsed.is_allowlist_enforced!;
       setUseAllowlist(msgIsAllowlistEnforced);
       const msgAllowlist: Player[] = parsed.allowlist!;
       setAllowlist(msgAllowlist);
+      const msgVersion: string = parsed.version!;
+      setVersion(msgVersion);
+      const msgPlayerHistory = parsed.players_history!;
+      setPlayersHistory(msgPlayerHistory);
     };
   }, [ws]);
 
@@ -100,6 +105,7 @@ export function useServerStatus(
   return {
     online,
     players,
+    playersHistory,
     version,
     motd,
     maxPlayers,
