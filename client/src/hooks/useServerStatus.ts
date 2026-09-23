@@ -20,7 +20,7 @@ export function useServerStatus(
     const client = new WebSocket(url);
     setWS(client);
 
-    const timeoutID = setTimeout(() => {
+    const timeoutID = window.setTimeout(() => {
       setOnline(false);
     }, 6000);
     stopLoadingTimeout.current = timeoutID;
